@@ -9,12 +9,26 @@ class User(AbstractUser):
         unique=True, verbose_name="Email", help_text="Введите почту"
     )
     avatar = models.ImageField(
-        upload_to="avatar/", blank=True, null=True, verbose_name="Аватар", help_text="Установите аватар"
+        upload_to="avatar/",
+        blank=True,
+        null=True,
+        verbose_name="Аватар",
+        help_text="Установите аватар",
     )
     phone_number = models.CharField(
-        max_length=30, blank=True, null=True, verbose_name="Номер телефона", help_text="Укажите номер телефона"
+        max_length=30,
+        blank=True,
+        null=True,
+        verbose_name="Номер телефона",
+        help_text="Укажите номер телефона",
     )
-    city = models.CharField(max_length=50, blank=True, null=True, verbose_name="Город", help_text="Укажите город")
+    city = models.CharField(
+        max_length=50,
+        blank=True,
+        null=True,
+        verbose_name="Город",
+        help_text="Укажите город",
+    )
 
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = []

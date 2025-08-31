@@ -1,5 +1,6 @@
-from materials.models import Course, Lesson
 from rest_framework.serializers import ModelSerializer
+
+from materials.models import Course, Lesson
 
 
 class CourseSerialaizer(ModelSerializer):

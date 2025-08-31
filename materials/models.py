@@ -12,7 +12,11 @@ class Course(models.Model):
     )
 
     preview = models.ImageField(
-        upload_to="preview/", blank="True", null="True", verbose_name="Превью", help_text="Установите картинку"
+        upload_to="preview/",
+        blank="True",
+        null="True",
+        verbose_name="Превью",
+        help_text="Установите картинку",
     )
 
     def __str__(self):
@@ -38,10 +42,20 @@ class Lesson(models.Model):
     )
 
     link = models.CharField(
-        max_length=150, blank="True", null="True", verbose_name="Ссылка", help_text="Введите ссылку на урок"
+        max_length=150,
+        blank="True",
+        null="True",
+        verbose_name="Ссылка",
+        help_text="Введите ссылку на урок",
     )
 
-    course = models.ForeignKey(Course, on_delete=models.SET_NULL, null=True, verbose_name="Курс", help_text="Выберите курс")
+    course = models.ForeignKey(
+        Course,
+        on_delete=models.SET_NULL,
+        null=True,
+        verbose_name="Курс",
+        help_text="Выберите курс",
+    )
 
     def __str__(self):
         return self.name
