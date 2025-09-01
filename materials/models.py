@@ -3,7 +3,7 @@ from django.db import models
 
 class Course(models.Model):
 
-    name = models.CharField(
+    title = models.CharField(
         max_length=100, verbose_name="Название", help_text="Введите название курса"
     )
 
@@ -29,7 +29,7 @@ class Course(models.Model):
 
 class Lesson(models.Model):
 
-    name = models.CharField(
+    title = models.CharField(
         max_length=100, verbose_name="Название", help_text="Введите название урока"
     )
 
