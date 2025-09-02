@@ -8,6 +8,7 @@ class UserDetailViewSerializer(serializers.ModelSerializer):
         model = User
         fields = ["email", "password", "phone_number"]
 
+
 class UserViewSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
