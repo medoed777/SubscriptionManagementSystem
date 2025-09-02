@@ -1,6 +1,8 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
+
 from materials.models import Course, Lesson
+
 
 class User(AbstractUser):
     username = None
@@ -40,8 +42,8 @@ class User(AbstractUser):
 
 class Payment(models.Model):
     PAYMENT_METHODS = [
-        ('cash', 'Наличные'),
-        ('transfer', 'Перевод на счет'),
+        ("cash", "Наличные"),
+        ("transfer", "Перевод на счет"),
     ]
 
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -52,4 +54,4 @@ class Payment(models.Model):
     payment_method = models.CharField(max_length=10, choices=PAYMENT_METHODS)
 
     def __str__(self):
-        return f'Платеж {self.amount} от {self.user.username} на {self.course or self.lesson}'
+        return f"Платеж {self.amount} от {self.user.username} на {self.course or self.lesson}"
