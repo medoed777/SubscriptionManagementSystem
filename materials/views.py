@@ -1,24 +1,15 @@
 from django_filters.rest_framework import DjangoFilterBackend
-from rest_framework.generics import (
-    CreateAPIView,
-    DestroyAPIView,
-    ListAPIView,
-    RetrieveAPIView,
-    UpdateAPIView,
-)
-from rest_framework import viewsets, filters
+from rest_framework import filters, viewsets
 
-from materials import models
+
 from materials.models import Course, Lesson
-from materials.serialiserz import (
-    CourseCountSerializer,
-    CourseSerializer,
-    LessonSerializer,
-)
+from materials.serialiserz import (CourseSerializer,
+                                   LessonSerializer)
+from users.filters import PaymentFilter
+from users.models import Payment
 
 
 class CoursesViewSet(viewsets.ModelViewSet):
-
 
     queryset = Course.objects.all()
     filter_backends = [DjangoFilterBackend, filters.OrderingFilter]
@@ -29,7 +20,7 @@ class CoursesViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         qs = super().get_queryset()
         user = self.request.user
-        if user.groups.filter(name='moders').exists():
+        if user.groups.filter(name="moders").exists():
             return qs
         return qs.filter(owner=user)
 
@@ -41,7 +32,6 @@ class CoursesViewSet(viewsets.ModelViewSet):
 
 class LessonsViewSet(viewsets.ModelViewSet):
 
-
     queryset = Lesson.objects.all()
     filter_backends = [DjangoFilterBackend, filters.OrderingFilter]
     ordering_fields = ["name"]
@@ -51,7 +41,7 @@ class LessonsViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         qs = super().get_queryset()
         user = self.request.user
-        if user.groups.filter(name='moders').exists():
+        if user.groups.filter(name="moders").exists():
             return qs
         return qs.filter(owner=user)
 
@@ -59,3 +49,11 @@ class LessonsViewSet(viewsets.ModelViewSet):
         lesson = serializer.save()
         lesson.owner = self.request.user
         lesson.save()
+
+
+class PymentViewSet:
+    queryset = Payment.objects.all()
+    filter_backends = [DjangoFilterBackend, filters.OrderingFilter]
+    filtered_class = PaymentFilter
+    ordering_fields = ["date_pay"]
+    ordering = ["-date_pay"]
