@@ -8,7 +8,11 @@ class User(AbstractUser):
     username = None
 
     email = models.EmailField(
-        unique=True, verbose_name="Email", help_text="Введите почту"
+        unique=True,
+        verbose_name="Email",
+        help_text="Введите почту",
+        blank=False,
+        null=False,
     )
     avatar = models.ImageField(
         upload_to="avatar/",
@@ -57,18 +61,21 @@ class Payment(models.Model):
         verbose_name = "Платеж"
         verbose_name_plural = "Платежи"
 
-
     def __str__(self):
         return f"Платеж {self.amount} от {self.user.username} на {self.course or self.lesson}"
 
 
-class NotifyUser(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="Пользователь")
-    course = models.ForeignKey(Course, on_delete=models.CASCADE, verbose_name="Подписка на курс")
+class Subscription(models.Model):
+    user = models.ForeignKey(
+        User, on_delete=models.CASCADE, verbose_name="Пользователь"
+    )
+    course = models.ForeignKey(
+        Course, on_delete=models.CASCADE, verbose_name="Подписка на курс"
+    )
 
     class Meta:
         verbose_name = "Подписка"
         verbose_name_plural = "Подписки"
 
     def __str__(self):
-        return f"{self.user.name} -> подписка на {self.course.name}"
+        return f"{self.user.name} подписан на {self.course.name}"

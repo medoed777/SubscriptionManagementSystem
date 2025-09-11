@@ -1,18 +1,15 @@
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import filters, viewsets
-from rest_framework.generics import CreateAPIView
-from rest_framework.permissions import AllowAny
-from rest_framework.request import Request
+from rest_framework.generics import CreateAPIView, get_object_or_404
+from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
+from rest_framework.views import APIView
 
+from materials.models import Course
 from users.filters import PaymentFilter
-from users.models import Payment, User
-from users.serializers import (
-    PaymentSerializer,
-    UserCreateSerializer,
-    UserDetailViewSerializer,
-    UserViewSerializer,
-)
+from users.models import Payment, Subscription, User
+from users.serializers import (PaymentSerializer, UserCreateSerializer,
+                               UserDetailViewSerializer, UserViewSerializer)
 
 
 class UserCreateAPIView(CreateAPIView):
@@ -47,18 +44,19 @@ class PaymentViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = PaymentSerializer
 
 
-def notify_user(request: Request):
-    if request.method == "POST":
-        course_id = request.POST.get("course_id")
-        user = request.user
-        course_item = get_object_or_404(Course, pk=course_id)
-        notify_item: NotifyUser = NotifyUser.objects.filter(user=user, course=course_item).first()
+class SubscriptionAPIView(APIView):
+    permission_classes = [IsAuthenticated]
 
-        if subs_item:
-            notify_item.delete()
+    def post(self, request, *args, **kwargs):
+        course_id = request.data.get("course_id")
+        course_item = get_object_or_404(Course, id=course_id)
+        subs_item = Subscription.objects.filter(user=request.user, course=course_item)
+
+        if subs_item.exists():
+            subs_item.delete()
             message = "Подписка удалена"
         else:
-            NotifyUser.objects.create(user=user, course=course_item)
-            message = "Подписка оформлена"
+            Subscription.objects.create(user=request.user, course=course_item)
+            message = "Подписка добавлена"
 
         return Response({"message": message})

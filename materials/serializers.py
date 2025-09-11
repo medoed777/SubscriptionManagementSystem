@@ -1,7 +1,9 @@
-from rest_framework.serializers import ModelSerializer, SerializerMethodField
 from rest_framework import serializers
+from rest_framework.serializers import ModelSerializer, SerializerMethodField
+
 from materials.models import Course, Lesson
 from materials.validators import validation_url
+from users.models import Subscription
 
 
 class LessonSerializer(ModelSerializer):
@@ -13,17 +15,24 @@ class LessonSerializer(ModelSerializer):
 
 
 class LessonDetailSerializer(ModelSerializer):
-    link = serializers.CharField(validators=[validation_url])
 
     class Meta:
         model = Lesson
         fields = ["id", "title", "description", "link"]
 
 
-class CourseSerializer(ModelSerializer):
+class CourseSerializer(serializers.ModelSerializer):
+    is_subscribed = serializers.SerializerMethodField()
+
     class Meta:
         model = Course
-        fields = "__all__"
+        fields = ["id", "title", "description", "is_subscribed"]
+
+    def get_is_subscribed(self, obj):
+        request = self.context.get("request")
+        if request and request.user.is_authenticated:
+            return Subscription.objects.filter(user=request.user, course=obj).exists()
+        return False
 
 
 class CourseCountSerializer(ModelSerializer):
