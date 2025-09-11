@@ -1,12 +1,15 @@
 from django.urls import path
 from rest_framework.permissions import AllowAny
 from rest_framework.routers import DefaultRouter
-from rest_framework_simplejwt.views import (TokenObtainPairView,
-                                            TokenRefreshView)
+from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
 from users.apps import UsersConfig
-from users.views import (PaymentViewSet, SubscriptionAPIView,
-                         UserCreateAPIView, UserViewSet)
+from users.views import (
+    PaymentViewSet,
+    SubscriptionAPIView,
+    UserCreateAPIView,
+    UserViewSet,
+)
 
 app_name = UsersConfig.name
 
@@ -29,4 +32,4 @@ urlpatterns = [
     path("subscribe/", SubscriptionAPIView.as_view(), name="subscribe"),
 ]
 
-urlpatterns = router.urls
+urlpatterns += router.urls

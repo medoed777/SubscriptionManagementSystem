@@ -8,8 +8,12 @@ from rest_framework.views import APIView
 from materials.models import Course
 from users.filters import PaymentFilter
 from users.models import Payment, Subscription, User
-from users.serializers import (PaymentSerializer, UserCreateSerializer,
-                               UserDetailViewSerializer, UserViewSerializer)
+from users.serializers import (
+    PaymentSerializer,
+    UserCreateSerializer,
+    UserDetailViewSerializer,
+    UserViewSerializer,
+)
 
 
 class UserCreateAPIView(CreateAPIView):
