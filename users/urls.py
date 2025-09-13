@@ -4,7 +4,12 @@ from rest_framework.routers import DefaultRouter
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
 from users.apps import UsersConfig
-from users.views import PaymentViewSet, UserCreateAPIView, UserViewSet
+from users.views import (
+    PaymentViewSet,
+    SubscriptionAPIView,
+    UserCreateAPIView,
+    UserViewSet,
+)
 
 app_name = UsersConfig.name
 
@@ -24,6 +29,7 @@ urlpatterns = [
         TokenRefreshView.as_view(permission_classes=(AllowAny,)),
         name="token_refresh",
     ),
+    path("subscribe/", SubscriptionAPIView.as_view(), name="subscribe"),
 ]
 
-urlpatterns = router.urls
+urlpatterns += router.urls

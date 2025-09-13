@@ -8,7 +8,11 @@ class User(AbstractUser):
     username = None
 
     email = models.EmailField(
-        unique=True, verbose_name="Email", help_text="Введите почту"
+        unique=True,
+        verbose_name="Email",
+        help_text="Введите почту",
+        blank=False,
+        null=False,
     )
     avatar = models.ImageField(
         upload_to="avatar/",
@@ -53,5 +57,25 @@ class Payment(models.Model):
     amount = models.DecimalField(max_digits=10, decimal_places=2)
     payment_method = models.CharField(max_length=10, choices=PAYMENT_METHODS)
 
+    class Meta:
+        verbose_name = "Платеж"
+        verbose_name_plural = "Платежи"
+
     def __str__(self):
         return f"Платеж {self.amount} от {self.user.username} на {self.course or self.lesson}"
+
+
+class Subscription(models.Model):
+    user = models.ForeignKey(
+        User, on_delete=models.CASCADE, verbose_name="Пользователь"
+    )
+    course = models.ForeignKey(
+        Course, on_delete=models.CASCADE, verbose_name="Подписка на курс"
+    )
+
+    class Meta:
+        verbose_name = "Подписка"
+        verbose_name_plural = "Подписки"
+
+    def __str__(self):
+        return f"{self.user.name} подписан на {self.course.name}"

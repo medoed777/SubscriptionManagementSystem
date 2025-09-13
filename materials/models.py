@@ -8,18 +8,22 @@ class Course(models.Model):
     )
 
     description = models.TextField(
-        verbose_name="Описание", help_text="Введите описание курса"
+        verbose_name="Описание",
+        help_text="Введите описание курса",
     )
 
     preview = models.ImageField(
         upload_to="preview/",
-        blank="True",
-        null="True",
+        blank=True,
+        null=True,
         verbose_name="Превью",
         help_text="Установите картинку",
     )
     owner = models.ForeignKey(
-        "users.User", on_delete=models.SET_NULL, blank=True, null=True
+        "users.User",
+        on_delete=models.SET_NULL,
+        blank=True,
+        null=True,
     )
 
     def __str__(self):
@@ -37,17 +41,18 @@ class Lesson(models.Model):
     )
 
     description = models.TextField(
-        verbose_name="Описание", help_text="Введите описание урока"
+        verbose_name="Описание",
+        help_text="Введите описание урока",
     )
 
     preview = models.ImageField(
-        upload_to="preview/", blank="True", null="True", verbose_name="Превью"
+        upload_to="preview/", blank=True, null=True, verbose_name="Превью"
     )
 
     link = models.CharField(
         max_length=150,
-        blank="True",
-        null="True",
+        blank=True,
+        null=True,
         verbose_name="Ссылка",
         help_text="Введите ссылку на урок",
     )
@@ -55,6 +60,7 @@ class Lesson(models.Model):
     course = models.ForeignKey(
         Course,
         on_delete=models.SET_NULL,
+        blank=True,
         null=True,
         verbose_name="Курс",
         help_text="Выберите курс",
