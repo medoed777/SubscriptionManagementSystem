@@ -62,7 +62,7 @@ class Payment(models.Model):
         verbose_name_plural = "Платежи"
 
     def __str__(self):
-        return f"Платеж {self.amount} от {self.user.username} на {self.course or self.lesson}"
+        return f"Платеж {self.amount} от {self.user.email} на {self.course or self.lesson}"
 
 
 class Subscription(models.Model):
@@ -78,4 +78,4 @@ class Subscription(models.Model):
         verbose_name_plural = "Подписки"
 
     def __str__(self):
-        return f"{self.user.name} подписан на {self.course.name}"
+        return f"{self.user.email} подписан на {self.course.title}"
