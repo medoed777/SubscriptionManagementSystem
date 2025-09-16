@@ -19,9 +19,13 @@ class CoursesViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         qs = super().get_queryset()
         user = self.request.user
-        if user.groups.filter(name="moders").exists():
+        if user.is_authenticated and user.groups.filter(name="moders").exists():
             return qs
-        return qs.filter(owner=user)
+
+        if user.is_authenticated:
+            return qs.filter(owner=user)
+
+        return qs.none()
 
     def perform_create(self, serializer):
         course = serializer.save()
@@ -58,9 +62,13 @@ class LessonsViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         qs = super().get_queryset()
         user = self.request.user
-        if user.groups.filter(name="moders").exists():
+        if user.is_authenticated and user.groups.filter(name="moders").exists():
             return qs
-        return qs.filter(owner=user)
+
+        if user.is_authenticated:
+            return qs.filter(owner=user)
+
+        return qs.none()
 
     def perform_create(self, serializer):
         lesson = serializer.save()

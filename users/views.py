@@ -9,11 +9,13 @@ from materials.models import Course
 from users.filters import PaymentFilter
 from users.models import Payment, Subscription, User
 from users.serializers import (
+    PaymentCreateSerializer,
     PaymentSerializer,
     UserCreateSerializer,
     UserDetailViewSerializer,
     UserViewSerializer,
 )
+from users.services import create_stripe_price_amount, create_stripe_session
 
 
 class UserCreateAPIView(CreateAPIView):
@@ -64,3 +66,16 @@ class SubscriptionAPIView(APIView):
             message = "Подписка добавлена"
 
         return Response({"message": message})
+
+
+class PaymentCreateAPIView(CreateAPIView):
+    serializer_class = PaymentCreateSerializer
+    queryset = Payment.objects.all()
+
+    def perform_create(self, serializer):
+        payment = serializer.save(user=self.request.user)
+        amount = create_stripe_price_amount(payment.name_product, payment.amount)
+        session_id, link = create_stripe_session(amount)
+        payment.session_id = session_id
+        payment.link = link
+        payment.save()
