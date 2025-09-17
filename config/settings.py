@@ -184,8 +184,10 @@ CELERY_TASK_TRACK_STARTED = True
 CELERY_TASK_TIME_LIMIT = 30 * 60
 
 CELERY_BEAT_SCHEDULE = {
-    'task-name': {
-        'task': 'users.tasks.user_active_period',  # Путь к задаче
-        'schedule': crontab(day_of_month='1', hour='0', minute='0'), # Расписание выполнения задачи (например, каждые 10 минут)
+    "task-name": {
+        "task": "users.tasks.user_active_period",  # Путь к задаче
+        "schedule": crontab(
+            day_of_month="1", hour="0", minute="0"
+        ),  # Расписание выполнения задачи (например, каждые 10 минут)
     },
 }
