@@ -17,3 +17,6 @@ SECRET_KEY=your_secret_key
 
 EMAIL_HOST_USER='your_email@example.ru'
 EMAIL_HOST_PASSWORD='your_password'
+
+CELERY_RESULT_BACKEND=
+CELERY_BROKER_URL=
