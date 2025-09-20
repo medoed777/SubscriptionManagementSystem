@@ -16,6 +16,7 @@ from users.serializers import (
     UserViewSerializer,
 )
 from users.services import create_stripe_price_amount, create_stripe_session
+from users.tasks import send_subscribe_user_course
 
 
 class UserCreateAPIView(CreateAPIView):
@@ -61,9 +62,15 @@ class SubscriptionAPIView(APIView):
         if subs_item.exists():
             subs_item.delete()
             message = "Подписка удалена"
+            theme = "Отписка от курса"
+            email_message = f"Вы успешно отписались от курса: {course_item.title}."
+            send_subscribe_user_course.delay(theme, email_message, request.user.email)
         else:
             Subscription.objects.create(user=request.user, course=course_item)
             message = "Подписка добавлена"
+            theme = "Подписка на курс"
+            email_message = f"Вы успешно подписались на курс: {course_item.title}."
+            send_subscribe_user_course.delay(theme, email_message, request.user.email)
 
         return Response({"message": message})
 
