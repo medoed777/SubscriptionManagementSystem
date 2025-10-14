@@ -114,3 +114,19 @@ pip install -r requirements.txt
 python manage.py migrate
 python manage.py createsuperuser
 python manage.py runserver
+
+## Запуск проекта с использованием Docker Compose
+#### Этот файл docker-compose.yml определяет конфигурацию для запуска всех необходимых сервисов вашего проекта: веб-приложения Django, базы данных PostgreSQL, Redis и Celery (worker и beat).
+
+Предварительные требования
+1. Docker установлен и работает.
+2. Docker Compose установлен (обычно входит в состав Docker Desktop).
+3. Файл .env с необходимыми переменными окружения (например, DATABASE_NAME, DATABASE_USER, DATABASE_PASSWORD).
+### Процесс запуска
+Сборка и запуск всех сервисов
+1. Перейдите в корневую директорию вашего проекта (где находится файл docker-compose.yml и Dockerfile). 
+2. Затем выполните следующую команду:
+
+docker-compose up --build
+или
+docker-compose -f docker-compose.yml up
