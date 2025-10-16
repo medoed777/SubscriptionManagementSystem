@@ -1,3 +1,5 @@
+from unittest.mock import patch
+
 from django.urls import reverse
 from rest_framework import status
 from rest_framework.test import APITestCase
@@ -102,11 +104,13 @@ class LessonTestCase(APITestCase):
             Subscription.objects.filter(user=self.user, course=self.course).exists()
         )
 
-    def test_unsubscribe_course(self):
+    @patch('materials.tasks.send_course_update_email.delay')
+    def test_unsubscribe_course(self, mock_send_email):
         Subscription.objects.create(user=self.user, course=self.course)
         url = reverse("users:subscribe")
         data = {"course_id": self.course.id}
         response = self.client.post(url, data)
+
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.data["message"], "Подписка удалена")
         self.assertFalse(
