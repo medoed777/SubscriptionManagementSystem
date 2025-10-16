@@ -89,16 +89,16 @@ WSGI_APPLICATION = "config.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.postgresql_psycopg2",
-        "NAME": os.getenv("DATABASE_NAME"),
-        "USER": os.getenv("DATABASE_USER"),
-        "PASSWORD": os.getenv("DATABASE_PASSWORD"),
-        "HOST": os.getenv("DATABASE_HOST", "localhost"),
-        "PORT": os.getenv("DATABASE_PORT", default="5432"),
-    }
-}
+# DATABASES = {
+#     "default": {
+#         "ENGINE": "django.db.backends.postgresql_psycopg2",
+#         "NAME": os.getenv("DATABASE_NAME"),
+#         "USER": os.getenv("DATABASE_USER"),
+#         "PASSWORD": os.getenv("DATABASE_PASSWORD"),
+#         "HOST": os.getenv("DATABASE_HOST", "localhost"),
+#         "PORT": os.getenv("DATABASE_PORT", default="5432"),
+#     }
+# }
 
 if "test" in sys.argv:
     DATABASES = {
@@ -107,7 +107,17 @@ if "test" in sys.argv:
             "NAME": BASE_DIR / "test_db.sqlite3",
         }
     }
-
+else:
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.postgresql_psycopg2",
+            "NAME": os.getenv("DATABASE_NAME"),
+            "USER": os.getenv("DATABASE_USER"),
+            "PASSWORD": os.getenv("DATABASE_PASSWORD"),
+            "HOST": os.getenv("DATABASE_HOST", "localhost"),
+            "PORT": os.getenv("DATABASE_PORT", default="5432"),
+        }
+    }
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
 
