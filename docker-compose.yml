@@ -15,11 +15,11 @@ services:
 
   nginx:
     build:
-      context: ./nginx
+      context: ./nginx.conf
     ports:
       - "80:80"
     volumes:
-      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./nginx.conf/nginx.conf.conf:/etc/nginx.conf/nginx.conf.conf
       - static_volume:/app/staticfiles
     depends_on:
       - web
