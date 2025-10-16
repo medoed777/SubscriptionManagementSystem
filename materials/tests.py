@@ -1,17 +1,15 @@
+import os
 from unittest.mock import patch
 
+from celery import current_app
 from django.urls import reverse
 from rest_framework import status
 from rest_framework.test import APITestCase
 
 from materials.models import Course, Lesson
 from users.models import Subscription, User
-import os
 
-
-os.environ['CELERY_TASK_ALWAYS_EAGER'] = 'True'
-
-from celery import current_app
+os.environ["CELERY_TASK_ALWAYS_EAGER"] = "True"
 current_app.conf.task_always_eager = True
 current_app.conf.task_eager_propagates = True
 
