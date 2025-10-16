@@ -104,7 +104,7 @@ class LessonTestCase(APITestCase):
             Subscription.objects.filter(user=self.user, course=self.course).exists()
         )
 
-    @patch('materials.tasks.send_course_update_email.delay')
+    @patch("materials.tasks.send_course_update_email.delay")
     def test_unsubscribe_course(self, mock_send_email):
         Subscription.objects.create(user=self.user, course=self.course)
         url = reverse("users:subscribe")
