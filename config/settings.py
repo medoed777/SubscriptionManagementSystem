@@ -222,3 +222,5 @@ if CACHE_ENABLE:
             "LOCATION": "redis://localhost:6379/0",
         }
     }
+
+test_env = os.getenv("TEST_ENV", 'false') == 'true'

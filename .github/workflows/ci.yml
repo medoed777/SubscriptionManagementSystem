@@ -5,6 +5,7 @@ on: [push, pull_request]
 env:
      SECRET_KEY: ${{ secrets.DJANGO_SECRET_KEY }}
      ANOTHER_VAR: value
+     TEST_ENV: 'true'
 
 jobs:
   lint:
