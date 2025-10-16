@@ -6,6 +6,12 @@ env:
      SECRET_KEY: ${{ secrets.DJANGO_SECRET_KEY }}
      ANOTHER_VAR: value
      TEST_ENV: 'true'
+     CELERY_BROKER_URL: 'redis://localhost:6379/0'
+     CELERY_RESULT_BACKEND: 'redis://localhost:6379/0'
+     CACHE_ENABLE: 'True'
+     DATABASE_NAME: 'django_project'
+     DATABASE_USER: 'postgres'
+     DATABASE_PORT: '5432'
 
 jobs:
   lint:
