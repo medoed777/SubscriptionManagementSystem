@@ -1,5 +1,5 @@
 from django_filters.rest_framework import DjangoFilterBackend
-from rest_framework import filters, viewsets, generics
+from rest_framework import filters, generics, viewsets
 from rest_framework.permissions import IsAuthenticated
 
 from materials.models import Course, Lesson
@@ -27,9 +27,6 @@ class CoursesViewSet(viewsets.ModelViewSet):
             return qs.filter(owner=user)
 
         return qs.none()
-
-    def perform_create(self, serializer):
-        course = serializer.save(owner=self.request.user)
 
     def get_permissions(self):
         if self.action == "create":
