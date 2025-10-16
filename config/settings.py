@@ -34,7 +34,7 @@ API_KEY_PUBLISHER_STRIPE = os.getenv("API_KEY_PUBLISHER_STRIPE")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv("DEBUG") == "True"
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
