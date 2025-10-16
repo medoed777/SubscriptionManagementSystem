@@ -101,6 +101,7 @@ WSGI_APPLICATION = "config.wsgi.application"
 # }
 
 if "test" in sys.argv:
+    print("sql")
     DATABASES = {
         "default": {
             "ENGINE": "django.db.backends.sqlite3",
@@ -108,6 +109,7 @@ if "test" in sys.argv:
         }
     }
 else:
+    print("postgres")
     DATABASES = {
         "default": {
             "ENGINE": "django.db.backends.postgresql_psycopg2",
@@ -191,8 +193,8 @@ EMAIL_USE_SSL = os.getenv("EMAIL_USE_SSL") == "True"
 
 # URL-адрес брокера сообщений
 # URL-адрес брокера результатов, также Redis
-CELERY_BROKER_URL = os.getenv("CELERY_BROKER_URL")
-CELERY_RESULT_BACKEND = os.getenv("CELERY_RESULT_BACKEND")
+CELERY_BROKER_URL = os.getenv('CELERY_BROKER_URL')
+CELERY_RESULT_BACKEND = os.getenv('CELERY_RESULT_BACKEND')
 
 # Часовой пояс для работы Celery
 CELERY_TIMEZONE = "Europe/Moscow"
