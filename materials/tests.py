@@ -6,6 +6,14 @@ from rest_framework.test import APITestCase
 
 from materials.models import Course, Lesson
 from users.models import Subscription, User
+import os
+
+
+os.environ['CELERY_TASK_ALWAYS_EAGER'] = 'True'
+
+from celery import current_app
+current_app.conf.task_always_eager = True
+current_app.conf.task_eager_propagates = True
 
 
 class LessonTestCase(APITestCase):
