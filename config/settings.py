@@ -99,8 +99,10 @@ WSGI_APPLICATION = "config.wsgi.application"
 #         "PORT": os.getenv("DATABASE_PORT", default="5432"),
 #     }
 # }
+test_env = os.getenv("TEST_ENV", 'false') == 'true'
 
-if "test" in sys.argv:
+
+if test_env:
     print("sql")
     DATABASES = {
         "default": {
@@ -193,8 +195,8 @@ EMAIL_USE_SSL = os.getenv("EMAIL_USE_SSL") == "True"
 
 # URL-адрес брокера сообщений
 # URL-адрес брокера результатов, также Redis
-CELERY_BROKER_URL = 'redis://localhost:6379/0'
-CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
+CELERY_BROKER_URL = os.getenv('CELERY_BROKER_URL')
+CELERY_RESULT_BACKEND = os.getenv('CELERY_RESULT_BACKEND')
 
 # Часовой пояс для работы Celery
 CELERY_TIMEZONE = "Europe/Moscow"
@@ -222,5 +224,3 @@ if CACHE_ENABLE:
             "LOCATION": "redis://localhost:6379/0",
         }
     }
-
-test_env = os.getenv("TEST_ENV", 'false') == 'true'
