@@ -185,8 +185,6 @@ EMAIL_USE_SSL = os.getenv("EMAIL_USE_SSL") == "True"
 # URL-адрес брокера результатов, также Redis
 CELERY_BROKER_URL = os.getenv("CELERY_BROKER_URL")
 CELERY_RESULT_BACKEND = os.getenv("CELERY_RESULT_BACKEND")
-if 'test' in sys.argv:
-    BROKER_URL = 'memory://'
 
 # Часовой пояс для работы Celery
 CELERY_TIMEZONE = "Europe/Moscow"
@@ -211,6 +209,6 @@ if CACHE_ENABLE:
     CACHES = {
         "default": {
             "BACKEND": "django.core.cache.backends.redis.RedisCache",
-            "LOCATION": "redis://localhost:6379/1",
+            "LOCATION": "redis://localhost:6379/0",
         }
     }
