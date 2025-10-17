@@ -9,6 +9,7 @@ DATABASE_PORT=myport        # Порт базы данных
 
 
 DEBUG=your_debug
+CACHE_ENABLE=
 
 API_KEY=your_secret_key
 API_KEY_PUBLISHER_STRIPE=your_secret_key
