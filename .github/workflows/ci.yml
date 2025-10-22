@@ -115,6 +115,7 @@ jobs:
         run: |
           ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }} << 'EOF'
           docker pull ${{ secrets.DOCKER_HUB_USERNAME }}/SubscriptionManagementSystem:${{ github.sha }}
-          docker stop SubscriptionManagementSystem || true && docker rm SubscriptionManagementSystem || true
+          docker stop SubscriptionManagementSystem
+          && docker rm SubscriptionManagementSystem
           docker run -d --name SubscriptionManagementSystem -p 80:8000 ${{ secrets.DOCKER_HUB_USERNAME }}/SubscriptionManagementSystem:${{ github.sha }}
           EOF
