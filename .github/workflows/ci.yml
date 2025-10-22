@@ -2,12 +2,6 @@ name: Django CI
 
 on: [push, pull_request]
 
-env:
-     SECRET_KEY: ${{ secrets.DJANGO_SECRET_KEY }}
-     ANOTHER_VAR: value
-     POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
-     POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
-
 jobs:
   lint:
     runs-on: ubuntu-latest
@@ -36,13 +30,13 @@ jobs:
       postgres:
         image: postgres:15
         env:
-          POSTGRES_DB: mydatabase
-          POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
-          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+          POSTGRES_DB: django_project
+          POSTGRES_USER: ${{ secrets.DATABASE_USER }}
+          POSTGRES_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
         ports:
           - 5432:5432
         options: >-
-          --health-cmd "pg_isready -U ${{ secrets.POSTGRES_USER }}"
+          --health-cmd "pg_isready -U ${DATABASE_USER}"
           --health-interval 10s
           --health-timeout 5s
           --health-retries 5
