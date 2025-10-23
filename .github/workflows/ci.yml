@@ -65,16 +65,13 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Wait for PostgreSQL to be ready
+      - name: Wait for Postgres
         run: |
-          for i in {1..30}; do
-            if docker exec postgres pg_isready -U ${{ secrets.DATABASE_USER }}; then
-              echo "Postgres is ready"
-              break
-            fi
+          until pg_isready -h localhost -p 5432 -U ${{ secrets.DATABASE_USER }}; do
             echo "Waiting for Postgres..."
-            sleep 5
+            sleep 3
           done
+      
 
       - name: Run migrations and tests
         run: |
