@@ -30,9 +30,9 @@ jobs:
       postgres:
         image: postgres:15
         env:
-          POSTGRES_DB: django_project
-          POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: 1i2c3e4m5a6n7A@
+          POSTGRES_DB: ${{ secrets.DATABASE_NAME }}
+          POSTGRES_USER: ${{ secrets.DATABASE_USER }}
+          POSTGRES_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
         ports:
           - 5432:5432
         options: >-
@@ -75,9 +75,9 @@ jobs:
 
       - name: Run migrations and tests
         env:
-          POSTGRES_DB: ${{ secrets.DATABASE_NAME }}
-          POSTGRES_USER: ${{ secrets.DATABASE_USER }}
-          POSTGRES_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
+          DATABASE_NAME: ${{ secrets.DATABASE_NAME }}
+          DATABASE_USER: ${{ secrets.DATABASE_USER }}
+          DATABASE_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
           SECRET_KEY: ${{ secrets.SECRET_KEY }}
         run: |
           python manage.py migrate
