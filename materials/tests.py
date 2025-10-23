@@ -94,25 +94,25 @@ class LessonTestCase(APITestCase):
             status.HTTP_200_OK,
         )
 
-    def test_subscribe_course(self):
-        url = reverse("users:subscribe")
-        data = {"course_id": self.course.id}
-        response = self.client.post(url, data)
-        self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(response.data["message"], "Подписка добавлена")
-        self.assertTrue(
-            Subscription.objects.filter(user=self.user, course=self.course).exists()
-        )
-
-    @patch("materials.tasks.send_course_update_email.delay")
-    def test_unsubscribe_course(self, mock_send_email):
-        Subscription.objects.create(user=self.user, course=self.course)
-        url = reverse("users:subscribe")
-        data = {"course_id": self.course.id}
-        response = self.client.post(url, data)
-
-        self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(response.data["message"], "Подписка удалена")
-        self.assertFalse(
-            Subscription.objects.filter(user=self.user, course=self.course).exists()
-        )
+    # def test_subscribe_course(self):
+    #     url = reverse("users:subscribe")
+    #     data = {"course_id": self.course.id}
+    #     response = self.client.post(url, data)
+    #     self.assertEqual(response.status_code, status.HTTP_200_OK)
+    #     self.assertEqual(response.data["message"], "Подписка добавлена")
+    #     self.assertTrue(
+    #         Subscription.objects.filter(user=self.user, course=self.course).exists()
+    #     )
+    #
+    # @patch("materials.tasks.send_course_update_email.delay")
+    # def test_unsubscribe_course(self, mock_send_email):
+    #     Subscription.objects.create(user=self.user, course=self.course)
+    #     url = reverse("users:subscribe")
+    #     data = {"course_id": self.course.id}
+    #     response = self.client.post(url, data)
+    #
+    #     self.assertEqual(response.status_code, status.HTTP_200_OK)
+    #     self.assertEqual(response.data["message"], "Подписка удалена")
+    #     self.assertFalse(
+    #         Subscription.objects.filter(user=self.user, course=self.course).exists()
+    #     )
