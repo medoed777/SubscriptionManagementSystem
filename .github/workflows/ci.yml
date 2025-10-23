@@ -74,6 +74,11 @@ jobs:
       
 
       - name: Run migrations and tests
+        env:
+          POSTGRES_DB: ${{ secrets.DATABASE_NAME }}
+          POSTGRES_USER: ${{ secrets.DATABASE_USER }}
+          POSTGRES_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
+          SECRET_KEY: ${{ secrets.SECRET_KEY }}
         run: |
           python manage.py migrate
           python manage.py test
