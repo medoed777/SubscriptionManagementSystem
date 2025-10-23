@@ -30,9 +30,9 @@ jobs:
       postgres:
         image: postgres:15
         env:
-          POSTGRES_DB: ${{ secrets.DATABASE_NAME }}
-          POSTGRES_USER: ${{ secrets.DATABASE_USER }}
-          POSTGRES_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
+          POSTGRES_DB: django_project
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: 1i2c3e4m5a6n7A@
         ports:
           - 5432:5432
         options: >-
