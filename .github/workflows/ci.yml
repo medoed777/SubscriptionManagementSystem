@@ -105,7 +105,7 @@ jobs:
     needs: build
     steps:
       - name: Set up SSH
-        uses: actions/checkout@v2
+        uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ secrets.SERVER_IP }}
           username: ${{ secrets.SSH_USER }}
