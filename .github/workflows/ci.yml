@@ -95,10 +95,10 @@ jobs:
         run: echo ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }} | docker login -u ${{ secrets.DOCKER_HUB_USERNAME }} --password-stdin
 
       - name: Build Docker image
-        run: docker build -t ${{ secrets.DOCKER_HUB_USERNAME }}/SubscriptionManagementSystem:${{ github.sha }} .
+        run: docker build -t ${{ secrets.DOCKER_HUB_USERNAME }}/subscriptionmanagementsystem:${{ github.sha }} .
 
       - name: Push Docker image to Docker Hub
-        run: docker push ${{ secrets.DOCKER_HUB_USERNAME }}/SubscriptionManagementSystem:${{ github.sha }}
+        run: docker push ${{ secrets.DOCKER_HUB_USERNAME }}/subscriptionmanagementsystem:${{ github.sha }}
 
   deploy:
     needs: build
@@ -116,8 +116,8 @@ jobs:
       - name: Deploy to Server
         run: |
           ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }} << 'EOF'
-          docker pull ${{ secrets.DOCKER_HUB_USERNAME }}/SubscriptionManagementSystem:${{ github.sha }}
-          docker stop SubscriptionManagementSystem
-          && docker rm SubscriptionManagementSystem
-          docker run -d --name SubscriptionManagementSystem -p 80:8000 ${{ secrets.DOCKER_HUB_USERNAME }}/SubscriptionManagementSystem:${{ github.sha }}
+          docker pull ${{ secrets.DOCKER_HUB_USERNAME }}/subscriptionmanagementsystem:${{ github.sha }}
+          docker stop subscriptionmanagementsystem
+          && docker rm subscriptionmanagementsystem
+          docker run -d --name subscriptionmanagementsystem -p 80:8000 ${{ secrets.DOCKER_HUB_USERNAME }}/subscriptionmanagementsystem:${{ github.sha }}
           EOF
