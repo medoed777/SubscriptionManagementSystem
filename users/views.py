@@ -8,9 +8,13 @@ from rest_framework.views import APIView
 from materials.models import Course
 from users.filters import PaymentFilter
 from users.models import Payment, Subscription, User
-from users.serializers import (PaymentCreateSerializer, PaymentSerializer,
-                               UserCreateSerializer, UserDetailViewSerializer,
-                               UserViewSerializer)
+from users.serializers import (
+    PaymentCreateSerializer,
+    PaymentSerializer,
+    UserCreateSerializer,
+    UserDetailViewSerializer,
+    UserViewSerializer,
+)
 from users.services import create_stripe_price_amount, create_stripe_session
 from users.tasks import send_subscribe_user_course
 

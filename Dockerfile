@@ -15,6 +15,10 @@ RUN pip install --upgrade pip && \
 
 COPY . .
 
+ENV SECRET_KEY='django-insecure-n+svd9^xa5)gj09c94gh0@k(f2g$vsiko2pyofgw4b)h0xu!el'
+ENV CELERY_RESULT_BACKEND='redis://localhost:6379/0'
+ENV CELERY_BROKER_URL='redis://localhost:6379/0'
+
 RUN mkdir -p /app/media
 
 EXPOSE 8000
